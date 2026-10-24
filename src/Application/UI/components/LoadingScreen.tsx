@@ -3,6 +3,10 @@ import eventBus from '../EventBus';
 
 type LoadingProps = {};
 
+const RESOURCE_LINE_DELAY_MS = 200;
+const COMPLETION_HOLD_MS = 1400;
+const START_REVEAL_DELAY_MS = 500;
+
 const LoadingScreen: React.FC<LoadingProps> = () => {
     const [progress, setProgress] = useState(0);
     const [toLoad, setToLoad] = useState(0);
@@ -18,7 +22,7 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
     const [doneLoading, setDoneLoading] = useState(false);
     const [webGLError, setWebGLError] = useState(false);
     const [counter, setCounter] = useState(0);
-    const [resources] = useState<string[]>([]);
+    const [resources, setResources] = useState<string[]>([]);
     const [mobileWarning, setMobileWarning] = useState(window.innerWidth < 768);
 
     const onResize = () => {
@@ -29,7 +33,10 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
         }
     };
 
-    window.addEventListener('resize', onResize);
+    useEffect(() => {
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
+    }, []);
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -43,19 +50,27 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
     }, []);
 
     useEffect(() => {
-        eventBus.on('loadedSource', (data) => {
-            setProgress(data.progress);
+        // Pace the BIOS readout while assets continue loading at full speed.
+        const pending: { sourceName: string; progress: number; loaded: number }[] = [];
+        const onProgress = (event: Event) => {
+            const data = (event as CustomEvent).detail;
             setToLoad(data.toLoad);
+            pending.push(data);
+        };
+        const timer = window.setInterval(() => {
+            const data = pending.shift();
+            if (!data) return;
+            setProgress(data.progress);
             setLoaded(data.loaded);
-            resources.push(
-                `Loaded ${data.sourceName}${getSpace(
+            setResources((current) => [...current, `Loaded ${data.sourceName}${getSpace(
                     data.sourceName
-                )} ... ${Math.round(data.progress * 100)}%`
-            );
-            if (resources.length > 8) {
-                resources.shift();
-            }
-        });
+                )} ... ${Math.round(data.progress * 100)}%`].slice(-8));
+        }, RESOURCE_LINE_DELAY_MS);
+        document.addEventListener('loadedSource', onProgress);
+        return () => {
+            document.removeEventListener('loadedSource', onProgress);
+            window.clearInterval(timer);
+        };
     }, []);
 
     useEffect(() => {
@@ -67,14 +82,18 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
         if (progress >= 1 && !webGLError) {
             setDoneLoading(true);
 
-            setTimeout(() => {
+            const fadeTimer = window.setTimeout(() => {
                 setLoadingTextOpacity(0);
-                setTimeout(() => {
-                    setStartPopupOpacity(1);
-                }, 500);
-            }, 1000);
+            }, COMPLETION_HOLD_MS);
+            const revealTimer = window.setTimeout(() => {
+                setStartPopupOpacity(1);
+            }, COMPLETION_HOLD_MS + START_REVEAL_DELAY_MS);
+            return () => {
+                window.clearTimeout(fadeTimer);
+                window.clearTimeout(revealTimer);
+            };
         }
-    }, [progress]);
+    }, [progress, webGLError]);
 
     useEffect(() => {
         if (webGLError) {
@@ -126,6 +145,7 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
 
     return (
         <div
+            aria-hidden={overlayOpacity === 0}
             style={Object.assign({}, styles.overlay, {
                 opacity: overlayOpacity,
                 transform: `scale(${overlayOpacity === 0 ? 1.1 : 1})`,
@@ -149,24 +169,24 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                         <div style={styles.logoContainer}>
                             <div>
                                 <p style={styles.green}>
-                                    <b>Heffernan,</b>{' '}
+                                    <b>Lưu Cao,</b>{' '}
                                 </p>
                                 <p style={styles.green}>
-                                    <b>Henry Inc.</b>
+                                    <b>Hoàng Inc.</b>
                                 </p>
                             </div>
                         </div>
                         <div style={styles.headerInfo}>
-                            <p>Released: 01/13/2000</p>
-                            <p>HHBIOS (C)2000 Heffernan Henry Inc.,</p>
+                            <p>Released: 11/07/2026</p>
+                            <p>HBIOS (C)2026 Lưu Cao Hoàng Inc.,</p>
                         </div>
                     </div>
                     <div style={styles.body} className="loading-screen-body">
-                        <p>HSP S13 2000-2022 Special UC131S</p>
+                        <p>HSP S13 2000-2026 Special UC131S</p>
                         <div style={styles.spacer} />
                         {showBiosInfo && (
                             <>
-                                <p>HSP Showcase(tm) XX 113</p>
+                                <p>HSP Graduation(tm) XX 113</p>
                                 <p>Checking RAM : {14000} OK</p>
                                 <div style={styles.spacer} />
                                 <div style={styles.spacer} />
@@ -195,7 +215,7 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                             <p>
                                 All Content Loaded, launching{' '}
                                 <b style={styles.green}>
-                                    'Henry Heffernan Portfolio Showcase'
+                                    'Lưu Cao Hoàng Graduation'
                                 </b>{' '}
                                 V1.0
                             </p>
@@ -218,6 +238,7 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
             <div
                 style={Object.assign({}, styles.popupContainer, {
                     opacity: startPopupOpacity,
+                    visibility: startPopupOpacity === 0 ? 'hidden' : 'visible',
                 })}
             >
                 <div style={styles.startPopup}>
@@ -227,7 +248,7 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                     <p>But do enjoy what I have done so far :)</p>
                     <div style={styles.spacer} />
                     <div style={styles.spacer} /> */}
-                    <p>Henry Heffernan Portfolio Showcase 2022</p>
+                    <p>Lưu Cao Hoàng Graduation 2026</p>
                     {mobileWarning && (
                         <>
                             <br />
@@ -254,9 +275,9 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                             marginTop: '16px',
                         }}
                     >
-                        <div className="bios-start-button" onClick={start}>
+                        <button type="button" className="bios-start-button" onClick={start}>
                             <p>START</p>
-                        </div>
+                        </button>
                     </div>
                 </div>
             </div>

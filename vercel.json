@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "npm run build",
+  "outputDirectory": "public",
+  "rewrites": [
+    { "source": "/invite/:slug", "destination": "/index.html" },
+    { "source": "/admin/rsvp", "destination": "/invitation.html" }
+  ],
+  "headers": [
+    { "source": "/(.*)", "headers": [{ "key": "Referrer-Policy", "value": "no-referrer" }] }
+  ]
+}

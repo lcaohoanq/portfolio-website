@@ -1,6 +1,9 @@
 node_modules
-package-lock.json
 .DS_Store
 *.psd
 
 public/
+.env
+.env.*
+!.env.example
+test-results/

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Graduation cap">
+  <defs>
+    <linearGradient id="cap" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#222222"/>
+      <stop offset="1" stop-color="#404040"/>
+    </linearGradient>
+  </defs>
+  <path d="M17 30v13c0 7 30 7 30 0V30" fill="url(#cap)"/>
+  <path d="M3 25 32 16 61 25 32 35Z" fill="#292929"/>
+  <path d="M33 24 49 28v14" fill="none" stroke="#F5AD10" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="49" cy="43" r="2.2" fill="#EBA200"/>
+  <path d="M47.3 44.5c-1.8 2.2-2.2 5.7-2.2 10.5h7.8c0-4.8-.4-8.3-2.2-10.5Z" fill="#F5B51B"/>
+  <path d="M47.6 48 47 55m2-7v7m2-7 .7 7" stroke="#D99800" stroke-width=".65"/>
+</svg>

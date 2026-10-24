@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { directInvitationUrl } from '../../Invitation/location';
 import { CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRenderer.js';
 import GUI from 'lil-gui';
 import Application from '../Application';
@@ -148,6 +149,8 @@ export default class MonitorScreen extends EventEmitter {
         iframe.onload = () => {
             if (iframe.contentWindow) {
                 window.addEventListener('message', (event) => {
+                    if (event.origin !== window.location.origin || event.source !== iframe.contentWindow) return;
+                    if (!event.data || !['mousemove', 'mousedown', 'mouseup', 'keydown', 'keyup'].includes(event.data.type)) return;
                     var evt = new CustomEvent(event.data.type, {
                         bubbles: true,
                         cancelable: false,
@@ -182,20 +185,7 @@ export default class MonitorScreen extends EventEmitter {
             }
         };
 
-        // Set iframe attributes
-        // PROD
-        iframe.src = 'https://os.henryheffernan.com/';
-        /**
-         * Use dev server is query params are present
-         *
-         * Warning: This will not work unless the dev server is running on localhost:3000
-         * Also running the dev server causes browsers to freak out over unsecure connections
-         * in the iframe, so it will flag a ton of issues.
-         */
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('dev')) {
-            iframe.src = 'http://localhost:3000/';
-        }
+        iframe.src = directInvitationUrl();
         iframe.style.width = this.screenSize.width + 'px';
         iframe.style.height = this.screenSize.height + 'px';
         iframe.style.padding = IFRAME_PADDING + 'px';
@@ -204,7 +194,7 @@ export default class MonitorScreen extends EventEmitter {
         iframe.className = 'jitter';
         iframe.id = 'computer-screen';
         iframe.frameBorder = '0';
-        iframe.title = 'HeffernanOS';
+        iframe.title = 'Thư mời tốt nghiệp của Hoàng';
 
         // Add iframe to container
         container.appendChild(iframe);

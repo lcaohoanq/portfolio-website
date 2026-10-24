@@ -15,6 +15,18 @@ body {
     outline: none;
 }
 
+.direct-invitation { display: flex; justify-content: center; align-items: center; background: #000; color: #fff; text-decoration: none; }
+.direct-invitation svg { width: 12px; height: 10px; pointer-events: none; }
+.direct-invitation:hover svg { opacity: .8; }
+.direct-invitation:active svg { opacity: .5; }
+.direct-invitation:focus-visible { outline: 1px dashed white; outline-offset: 2px; }
+@media (max-width: 768px) {
+    .direct-invitation svg { width: 9px; height: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .jitter { animation: none !important; }
+}
+
 .jitter {
     animation-duration: 0.3s;
     animation-timing-function: ease-in-out;

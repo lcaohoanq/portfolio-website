@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import FreeCamToggle from './FreeCamToggle';
 import MuteToggle from './MuteToggle';
+import { directInvitationUrl } from '../../../Invitation/location';
 
 interface InfoOverlayProps {
     visible: boolean;
 }
 
-const NAME_TEXT = 'Henry Heffernan';
-const TITLE_TEXT = 'Software Engineer';
+const NAME_TEXT = 'Lưu Cao Hoàng';
+const TITLE_TEXT = 'Graduation · 07.11.2026';
 const MULTIPLIER = 1;
 
 const InfoOverlay: React.FC<InfoOverlayProps> = ({ visible }) => {
@@ -105,7 +106,7 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ visible }) => {
     }, [time]);
 
     return (
-        <div style={styles.wrapper}>
+        <div style={styles.wrapper} aria-hidden={!visible}>
             {nameText !== '' && (
                 <div style={styles.container}>
                     <p>{nameText}</p>
@@ -117,7 +118,7 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ visible }) => {
                 </div>
             )}
             {timeText !== '' && (
-                <div style={styles.lastRow}>
+                <div style={styles.lastRow} role="group" aria-label="Điều khiển căn phòng">
                     <div
                         style={Object.assign(
                             {},
@@ -136,6 +137,20 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ visible }) => {
                         <div style={styles.lastRowChild}>
                             <FreeCamToggle />
                         </div>
+                    )}
+                    {freeCamVisible && (
+                        <a
+                            className="icon-control-container direct-invitation"
+                            href={directInvitationUrl()}
+                            aria-label="Đọc thư trực tiếp"
+                            title="Đọc thư trực tiếp"
+                            tabIndex={visible ? 0 : -1}
+                            onMouseDown={(event) => event.stopPropagation()}
+                        >
+                            <svg viewBox="0 0 16 12" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                                <path d="M1 1h14v10H1z M1 1l7 6 7-6" />
+                            </svg>
+                        </a>
                     )}
                 </div>
             )}

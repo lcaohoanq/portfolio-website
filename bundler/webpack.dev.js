@@ -20,9 +20,15 @@ module.exports = merge(
         },
         devServer:
         {
-            host: 'local-ip',
+            host: '127.0.0.1',
             port: portFinderSync.getPort(8080),
-            open: true,
+            open: false,
+            historyApiFallback: {
+                rewrites: [
+                    { from: /^\/admin\/rsvp$/, to: '/invitation.html' },
+                    { from: /^\/invite\/[^/]+\/?$/, to: '/index.html' },
+                ],
+            },
             https: false,
             allowedHosts: 'all',
             hot: false,

@@ -2,13 +2,36 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
+const fs = require('fs');
+const webpack = require('webpack');
+
+function galleryImages(directory, prefix = '') {
+    return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+        const relativePath = prefix + entry.name;
+        if (entry.isDirectory()) {
+            return galleryImages(path.join(directory, entry.name), relativePath + '/');
+        }
+        return entry.isFile() && /\.(jpe?g|png|webp|avif|gif)$/i.test(entry.name)
+            ? [relativePath.split('/').map(encodeURIComponent).join('/')]
+            : [];
+    }).sort();
+}
+
+for (const name of ['.env.local', '.env']) {
+    const file = path.resolve(__dirname, '..', name);
+    if (fs.existsSync(file)) process.loadEnvFile(file);
+}
 
 module.exports = {
-    entry: path.resolve(__dirname, '../src/script.ts'),
+    entry: {
+        room: path.resolve(__dirname, '../src/script.ts'),
+        invitation: path.resolve(__dirname, '../src/Invitation/index.tsx'),
+    },
     output: {
         hashFunction: 'xxhash64',
-        filename: 'bundle.[contenthash].js',
+        filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, '../public'),
+        publicPath: '/',
     },
     devtool: 'source-map',
     plugins: [
@@ -17,7 +40,19 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, '../src/index.html'),
+            chunks: ['room'],
             minify: true,
+        }),
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, '../src/Invitation/index.html'),
+            filename: 'invitation.html',
+            chunks: ['invitation'],
+            minify: true,
+        }),
+        new webpack.DefinePlugin({
+            __GALLERY_IMAGES__: JSON.stringify(galleryImages(path.resolve(__dirname, '../static/invitation/gallery'))),
+            __SUPABASE_URL__: JSON.stringify(process.env.VITE_SUPABASE_URL || ''),
+            __SUPABASE_ANON_KEY__: JSON.stringify(process.env.VITE_SUPABASE_ANON_KEY || ''),
         }),
         new MiniCSSExtractPlugin(),
     ],
