@@ -2,6 +2,7 @@
     "compilerOptions": {
         "target": "ES6",
         "moduleResolution": "node",
+        "types": ["node", "react", "react-dom", "three"],
         "strict": true,
         "paths": {
             "three/examples/jsm/libs/dat.gui.module": ["../node_modules/@types/dat.gui"]
