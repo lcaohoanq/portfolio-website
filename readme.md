@@ -85,10 +85,22 @@ RSVP gọi thẳng Supabase, website trên Vercel vẫn là static. Giữ đầy
 - `src/Invitation/data/copy.ts`: lời mời và lời cảm ơn.
 - `src/Invitation/Content.tsx`: các trang thư mời, thông tin, ảnh và credits.
 - `static/invitation/`: ảnh, chữ ký và font từ gradar.
-- `static/invitation/gallery/`: toàn bộ 41 ảnh gallery từ gradar. Thêm/xóa ảnh
+- `static/invitation/photos/fit.png`: ảnh chân dung ở phần Thư mời;
+  khung ảnh căn vào mũ, khuôn mặt và thân trên bằng `.portrait` trong `src/Invitation/style.css`.
+- `static/invitation/photos/event-cover.png`: ảnh riêng của trang Buổi lễ.
+  Thay file này bằng ảnh PNG mới rồi build lại để cập nhật ảnh trang Buổi lễ.
+  Ảnh trong mục Kỷ niệm được quản lý riêng ở thư mục gallery bên dưới.
+- `static/invitation/gallery/`: ảnh gốc của gallery. Thêm/xóa ảnh
   trong thư mục này rồi build lại; danh sách Kỷ niệm được tạo tự động, hỗ trợ
-  cả thư mục con và tên file có khoảng trắng. Khi chạy dev, khởi động lại dev
-  server sau khi thêm/xóa ảnh.
+  cả thư mục con và tên file có khoảng trắng. Dev server cũng theo dõi thay đổi
+  trong thư mục này để cập nhật danh sách và ảnh xem trước.
+- Build/dev tự tạo ảnh xem trước WebP rộng tối đa 480px và 800px, chất lượng 80,
+  trong `invitation/gallery-previews/` của bản xuất. Ảnh có tên theo hash nội dung;
+  bản chuyển đổi được cache ở `node_modules/.cache/gallery/` để tái sử dụng.
+  Ảnh gốc được giữ nguyên; không cần tự nén hay đổi tên ảnh.
+- Mục Kỷ niệm ban đầu hiện 12 ảnh rồi tự thêm 12 ảnh khi cuộn gần cuối
+  vùng nội dung. Trình duyệt chọn bản WebP phù hợp màn hình và tải ảnh khi gần
+  vùng xem; bấm ảnh để mở ảnh gốc ở tab mới. Caption vẫn ghép theo đường dẫn gốc.
 - Caption ảnh đọc trực tiếp từ RPC `get_gallery_captions` của Supabase đang
   dùng chung với gradar, ghép bằng đường dẫn ảnh đã URL-encode. Sửa caption
   trong dashboard ảnh của gradar rồi tải lại mục Kỷ niệm để cập nhật; không

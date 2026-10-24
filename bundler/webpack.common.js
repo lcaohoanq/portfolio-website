@@ -4,18 +4,7 @@ const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
-
-function galleryImages(directory, prefix = '') {
-    return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
-        const relativePath = prefix + entry.name;
-        if (entry.isDirectory()) {
-            return galleryImages(path.join(directory, entry.name), relativePath + '/');
-        }
-        return entry.isFile() && /\.(jpe?g|png|webp|avif|gif)$/i.test(entry.name)
-            ? [relativePath.split('/').map(encodeURIComponent).join('/')]
-            : [];
-    }).sort();
-}
+const GalleryImagesPlugin = require('./GalleryImagesPlugin.cjs');
 
 for (const name of ['.env.local', '.env']) {
     const file = path.resolve(__dirname, '..', name);
@@ -35,6 +24,7 @@ module.exports = {
     },
     devtool: 'source-map',
     plugins: [
+        new GalleryImagesPlugin({ directory: path.resolve(__dirname, '../static/invitation/gallery') }),
         new CopyWebpackPlugin({
             patterns: [{ from: path.resolve(__dirname, '../static') }],
         }),
@@ -50,7 +40,6 @@ module.exports = {
             minify: true,
         }),
         new webpack.DefinePlugin({
-            __GALLERY_IMAGES__: JSON.stringify(galleryImages(path.resolve(__dirname, '../static/invitation/gallery'))),
             __SUPABASE_URL__: JSON.stringify(process.env.VITE_SUPABASE_URL || ''),
             __SUPABASE_ANON_KEY__: JSON.stringify(process.env.VITE_SUPABASE_ANON_KEY || ''),
         }),

@@ -21,7 +21,7 @@ export default function Content({ page, invite, accessToken, navigate }: {
             <p className="eyebrow">Bạn có một thư mới · Class of 2026</p>
             <h1>Một cột mốc mới.<br /><em>Cùng bạn, nhé.</em></h1>
             <p className="letter-date">07.11.2026 / ĐẠI HỌC FPT HCM</p>
-        </div><img className="portrait" src="/invitation/photos/graduation-fit.png" alt="Hoàng trong trang phục tốt nghiệp" /></div>
+        </div><img className="portrait" src="/invitation/photos/fit.png" alt="Hoàng trong trang phục tốt nghiệp" /></div>
         <hr />
         <h2>{invite.greeting}</h2>
         <p>{personalNoteCopy.paragraphs[0]}.</p>
@@ -31,9 +31,9 @@ export default function Content({ page, invite, accessToken, navigate }: {
         <div className="letter-actions"><button className="site-button" onClick={() => navigate('event')}>Thông tin buổi lễ →</button><button className="site-button" onClick={() => navigate('rsvp')}>Gửi lời hồi âm</button></div>
     </article>;
     if (page === 'event') return <section>
-        <p className="eyebrow">Lưu lại cuộc hẹn của chúng mình</p>
+        {/* <p className="eyebrow">Lưu lại cuộc hẹn của chúng mình</p> */}
         <h1>Hẹn bạn<br /><em>ngày tốt nghiệp.</em></h1>
-        <img className="campus" src="/invitation/gallery/fpt.jpg" alt="Khuôn viên Đại học FPT HCM" loading="lazy" />
+        <img className="campus" src="/invitation/photos/event-cover.png" alt="Ảnh buổi lễ tốt nghiệp" loading="lazy" />
         <h2>{event.title}</h2>
         <dl className="event-facts">
             <div><dt>Ngày</dt><dd>Thứ Bảy, {formatEventDate(event.date)}</dd></div>
