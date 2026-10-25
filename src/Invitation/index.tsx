@@ -6,6 +6,7 @@ import { invitationLocation } from './location';
 import { getInvitation, rsvpConfigured } from './services/rsvp';
 import RsvpDashboard from './pages/RsvpDashboardPage';
 import { preloadEventCover } from './services/eventCover';
+import { preloadGalleryCaptions } from './services/gallery';
 import '../Desktop/original.css';
 import './style.css';
 
@@ -52,5 +53,8 @@ if (window.parent !== window) {
     }
 }
 
-if (window.location.pathname !== '/admin/rsvp') preloadEventCover();
+if (window.location.pathname !== '/admin/rsvp') {
+    preloadEventCover();
+    preloadGalleryCaptions();
+}
 ReactDOM.render(<App />, document.getElementById('root'));
