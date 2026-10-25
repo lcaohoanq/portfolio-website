@@ -38,7 +38,7 @@ export default function MemoryGallery() {
     }, []);
 
     return <section>
-        <p className="eyebrow">Những điều mình muốn mang theo</p>
+        {/* <p className="eyebrow">Những điều mình muốn mang theo</p> */}
         <h1>Một vài<br /><em>khoảnh khắc.</em></h1>
         <p>Một góc nhỏ để nhìn lại hành trình trước khi bước sang chương mới.</p>
         <div className="photo-grid">{__GALLERY_IMAGES__.slice(0, visibleCount).map(({ file, previews }, index) => <figure key={file}>
