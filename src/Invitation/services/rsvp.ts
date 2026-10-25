@@ -42,6 +42,7 @@ export async function callRsvpRpc<T>(
     | 'get_gallery_captions'
     | 'set_gallery_caption',
   body: Record<string, string | number>,
+  signal?: AbortSignal,
 ): Promise<T> {
   if (!supabaseUrl || !supabaseKey) {
     throw new Error('RSVP_CONFIGURATION_MISSING')
@@ -55,6 +56,7 @@ export async function callRsvpRpc<T>(
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),
+    signal,
   })
 
   if (!response.ok) {

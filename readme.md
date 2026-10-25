@@ -103,8 +103,13 @@ RSVP gọi thẳng Supabase, website trên Vercel vẫn là static. Giữ đầy
   vùng xem; bấm ảnh để mở ảnh gốc ở tab mới. Caption vẫn ghép theo đường dẫn gốc.
 - Caption ảnh đọc trực tiếp từ RPC `get_gallery_captions` của Supabase đang
   dùng chung với gradar, ghép bằng đường dẫn ảnh đã URL-encode. Sửa caption
-  trong dashboard ảnh của gradar rồi tải lại mục Kỷ niệm để cập nhật; không
-  cần build lại. Nếu chưa có caption hoặc kết nối lỗi, ảnh vẫn hiển thị.
+  trong dashboard ảnh của gradar; không cần build lại. Caption được tải trước
+  khi mở thư và cache trong bộ nhớ + localStorage trong 24 giờ. Cache hết hạn
+  vẫn hiển thị ngay, cập nhật nền và áp dụng caption mới ở lần mở Kỷ niệm tiếp
+  theo để tránh xê dịch bố cục. Muốn cập nhật ngay, xóa mục localStorage có tiền tố
+  `invitation:gallery-captions:v1:` rồi tải lại trang. Nếu chưa có cache, gallery
+  chờ caption tối đa 5 giây; kết nối lỗi vẫn cho xem ảnh. Preview có hash được
+  cấu hình HTTP cache một năm trên Vercel; đổi ảnh sẽ tạo URL mới.
 - `src/Desktop/`: giao diện Windows và tài nguyên desktop gốc.
 - Lời chào/lời nhắn riêng từng khách: sửa khi tạo khách trong dashboard.
 

@@ -51,9 +51,9 @@ export default function RSVP({ slug, accessToken }: { slug: string; accessToken:
         : state === 'error' ? 'Chưa tải được phản hồi. Bạn hãy kiểm tra kết nối rồi thử lại.' : '';
 
     return <section className="rsvp-panel">
-        <p className="eyebrow">Một lời hẹn nhỏ</p>
+        {/* <p className="eyebrow">Một lời hẹn nhỏ</p> */}
         <h2>Bạn sẽ đến chứ?</h2>
-        <p>Hồi âm trước ngày 07/11/2026 để mình biết nhé. Bạn có thể đi cùng thêm người.</p>
+        <p>Hồi âm trước ngày 07/11/2026 để mình biết nhé</p>
         {help && <p className="notice" role="status">{help}</p>}
         {state === 'error' && <button className="site-button" onClick={() => setAttempt(attempt + 1)}>Thử tải lại</button>}
         <form onSubmit={submit} onChange={() => setNotice('')}>

@@ -19,7 +19,7 @@ export default function Content({ page, invite, accessToken, navigate }: {
 }) {
     if (page === 'letter') return <article className="letter">
         <div className="letter-heading"><div>
-            <p className="eyebrow">Bạn có một thư mới · Class of 2026</p>
+            {/* <p className="eyebrow">Bạn có một thư mới · Class of 2026</p> */}
             <h1>Một cột mốc mới.<br /><em>Cùng bạn, nhé.</em></h1>
             <p className="letter-date">07.11.2026 / ĐẠI HỌC FPT HCM</p>
         </div><img className="portrait" src="/invitation/photos/fit.png" alt="Hoàng trong trang phục tốt nghiệp" /></div>
@@ -29,7 +29,7 @@ export default function Content({ page, invite, accessToken, navigate }: {
         <p>{invite.message || invitationCopy.paragraph}</p>
         <p>Mình mong được gặp bạn, cùng trò chuyện và chụp một tấm hình để nhớ về ngày đặc biệt này.</p>
         <div className="signature"><img src="/invitation/signature.png" alt="Chữ ký của Hoàng" /><span>{archive.fullName}</span></div>
-        <div className="letter-actions"><button className="site-button" onClick={() => navigate('event')}>Thông tin buổi lễ →</button><button className="site-button" onClick={() => navigate('rsvp')}>Gửi lời hồi âm</button></div>
+        {/* <div className="letter-actions"><button className="site-button" onClick={() => navigate('event')}>Thông tin buổi lễ →</button><button className="site-button" onClick={() => navigate('rsvp')}>Gửi lời hồi âm</button></div> */}
     </article>;
     if (page === 'event') return <section>
         {/* <p className="eyebrow">Lưu lại cuộc hẹn của chúng mình</p> */}
@@ -42,7 +42,7 @@ export default function Content({ page, invite, accessToken, navigate }: {
             <div><dt>Địa điểm</dt><dd>{event.venue}<p>{event.address}</p></dd></div>
         </dl>
         <div className="letter-actions"><a className="site-button" href={event.directionsUrl!} target="_blank" rel="noreferrer">Xem đường đi ↗</a><a className="site-button" href={createGoogleCalendarUrl(event, archive)!} target="_blank" rel="noreferrer">Thêm vào lịch ↗</a></div>
-        <p className="footnote">Bạn có thể rủ thêm người đi cùng. Hẹn gặp bạn ở đó nhé!</p>
+        {/* <p className="footnote">Bạn có thể rủ thêm người đi cùng. Hẹn gặp bạn ở đó nhé!</p> */}
     </section>;
     if (page === 'photos') return <MemoryGallery />;
     if (page === 'rsvp') return <RSVP slug={invite.slug} accessToken={accessToken} />;

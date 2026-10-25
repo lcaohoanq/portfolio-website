@@ -27,7 +27,7 @@ export default function Desktop({ invite, accessToken }: { invite: Invitation; a
         </div>
         {open && <div className="invitation-window" style={{ visibility: minimized ? 'hidden' : 'visible' }}>
             <Window top={24} left={64} width={Math.max(300, window.innerWidth - 100)} height={Math.max(300, window.innerHeight - 100)}
-                windowTitle="Lưu Cao Hoàng — Thư mời tốt nghiệp 2026" windowBarIcon="windowExplorerIcon"
+                windowTitle="Thư mời tốt nghiệp" windowBarIcon="windowExplorerIcon"
                 closeWindow={() => setOpen(false)} minimizeWindow={() => setMinimized(true)} onInteract={() => setStartOpen(false)}
                 bottomLeftText="">
                 <div className="site-page">

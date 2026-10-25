@@ -3,9 +3,9 @@ import eventBus from '../EventBus';
 
 type LoadingProps = {};
 
-const RESOURCE_LINE_DELAY_MS = 200;
-const COMPLETION_HOLD_MS = 1400;
-const START_REVEAL_DELAY_MS = 500;
+const RESOURCE_LINE_DELAY_MS = 120;
+const COMPLETION_HOLD_MS = 900;
+const START_REVEAL_DELAY_MS = 350;
 
 const LoadingScreen: React.FC<LoadingProps> = () => {
     const [progress, setProgress] = useState(0);
