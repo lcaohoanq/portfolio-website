@@ -4,13 +4,14 @@ import { invitationCopy, personalNoteCopy } from './data/copy';
 import { createGoogleCalendarUrl } from './services/calendar';
 import RSVP from './components/RSVP';
 import MemoryGallery from './components/MemoryGallery';
+import { eventCoverSrc } from './services/eventCover';
 
 export type Invitation = { slug: string; name: string; greeting: string; message: string };
 export type Page = 'letter' | 'event' | 'photos' | 'rsvp' | 'credits';
 export const pages: { key: Page; title: string }[] = [
     { key: 'letter', title: 'Thư mời' }, { key: 'event', title: 'Buổi lễ' },
     { key: 'photos', title: 'Kỷ niệm' }, { key: 'rsvp', title: 'Hồi âm' },
-    { key: 'credits', title: 'Credits' },
+    // { key: 'credits', title: 'Credits' },
 ];
 
 export default function Content({ page, invite, accessToken, navigate }: {
@@ -33,7 +34,7 @@ export default function Content({ page, invite, accessToken, navigate }: {
     if (page === 'event') return <section>
         {/* <p className="eyebrow">Lưu lại cuộc hẹn của chúng mình</p> */}
         <h1>Hẹn bạn<br /><em>ngày tốt nghiệp.</em></h1>
-        <img className="campus" src="/invitation/photos/event-cover.png" alt="Ảnh buổi lễ tốt nghiệp" loading="lazy" />
+        <img className="campus" src={eventCoverSrc} alt="Ảnh buổi lễ tốt nghiệp" width={1448} height={1086} loading="eager" decoding="async" />
         <h2>{event.title}</h2>
         <dl className="event-facts">
             <div><dt>Ngày</dt><dd>Thứ Bảy, {formatEventDate(event.date)}</dd></div>

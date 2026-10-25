@@ -29,12 +29,12 @@ export default function Desktop({ invite, accessToken }: { invite: Invitation; a
             <Window top={24} left={64} width={Math.max(300, window.innerWidth - 100)} height={Math.max(300, window.innerHeight - 100)}
                 windowTitle="Lưu Cao Hoàng — Thư mời tốt nghiệp 2026" windowBarIcon="windowExplorerIcon"
                 closeWindow={() => setOpen(false)} minimizeWindow={() => setMinimized(true)} onInteract={() => setStartOpen(false)}
-                bottomLeftText="Hoàng’s Graduation · 07.11.2026">
+                bottomLeftText="">
                 <div className="site-page">
                     <nav className="invitation-nav" aria-label="Nội dung thư mời">
                         <div className="nav-identity"><h2>Lưu Cao<br />Hoàng</h2><p>Graduation ’26</p></div>
                         {pages.map(({ key, title }) => <button key={key} className={`nav-link ${page === key ? 'selected' : ''}`} aria-current={page === key ? 'page' : undefined} onClick={() => navigate(key)}>{title}</button>)}
-                        <span className="nav-note">Một cuộc hẹn,<br />một chương mới.</span>
+                        {/* <span className="nav-note">Một cuộc hẹn,<br />một chương mới.</span> */}
                     </nav>
                     <main className="site-page-content" key={page} id="letter-content"><Content page={page} invite={invite} accessToken={accessToken} navigate={navigate} /></main>
                 </div>

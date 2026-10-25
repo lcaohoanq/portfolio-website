@@ -217,7 +217,7 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                                 <b style={styles.green}>
                                     'Lưu Cao Hoàng Graduation'
                                 </b>{' '}
-                                V1.0
+                                V1.0.0
                             </p>
                         )}
                         <div style={styles.spacer} />

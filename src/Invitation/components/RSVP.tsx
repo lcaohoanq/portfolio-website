@@ -69,9 +69,6 @@ export default function RSVP({ slug, accessToken }: { slug: string; accessToken:
                         <span>{label}</span>
                     </label>)}
                 </div>
-                {status === 'attending' && <label>Tổng số người, tính cả bạn
-                    <input type="number" min="1" step="1" required value={Number.isFinite(partySize) ? partySize : ''} onChange={(e) => setPartySize(e.currentTarget.valueAsNumber)} />
-                </label>}
                 <label>Gửi Hoàng một lời nhắn
                     <textarea rows={5} maxLength={500} value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Chỗ dành cho vài lời thân thương…" />
                 </label>

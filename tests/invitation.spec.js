@@ -26,6 +26,40 @@ test('sample invitation retains the desktop and correct event/calendar details',
     await expect(page.getByRole('button', { name: 'Gửi lời hồi âm' })).toBeDisabled();
 });
 
+test('event photo loads before opening its page and is reused on navigation', async ({ page }) => {
+    const imageRequests = [];
+    page.on('request', (request) => {
+        if (request.resourceType() === 'image') imageRequests.push(request.url());
+    });
+    await page.goto('/invitation.html');
+    await expect(page.getByRole('heading', { name: 'Gửi bạn,' })).toBeVisible();
+    await expect(page.getByAltText('Ảnh buổi lễ tốt nghiệp')).toHaveCount(0);
+    const src = await page.locator('link[rel="preload"][as="image"]').evaluate((link) => link.href);
+    await page.waitForFunction((url) => performance.getEntriesByName(url).some((entry) => entry.responseEnd > 0), src);
+    expect(imageRequests.filter((url) => url === src)).toHaveLength(1);
+
+    const navigation = page.getByRole('navigation', { name: 'Nội dung thư mời' });
+    await navigation.getByRole('button', { name: 'Buổi lễ', exact: true }).click();
+    const cover = page.getByAltText('Ảnh buổi lễ tốt nghiệp');
+    await expect(cover).toHaveAttribute('src', new URL(src).pathname);
+    await expect.poll(() => cover.evaluate((image) => image.complete && image.naturalWidth === 1448)).toBe(true);
+    const bounds = await cover.boundingBox();
+    expect(Math.abs(bounds.height - bounds.width * 3 / 4)).toBeLessThan(1);
+    await page.screenshot({ path: 'test-results/event-cover-preloaded.png' });
+    await navigation.getByRole('button', { name: 'Thư mời', exact: true }).click();
+    await navigation.getByRole('button', { name: 'Buổi lễ', exact: true }).click();
+    await cover.evaluate((image) => image.decode());
+    const downloads = await page.evaluate((url) => performance.getEntriesByName(url).filter((entry) => entry.transferSize > 0).length, src);
+    expect(downloads).toBe(1);
+    expect(imageRequests.some((url) => url.endsWith('/event-cover.png'))).toBe(false);
+
+    const room = await page.request.get('/invite/demo');
+    expect(await room.text()).toContain(new URL(src).pathname);
+    const response = await page.request.get(src);
+    expect(response.headers()['content-type']).toBe('image/webp');
+    expect((await response.body()).length).toBeLessThan(500000);
+});
+
 test('personal invitation loads, persists RSVP and restores it on reload', async ({ page }) => {
     let saved = { ...initialRsvp };
     let submission;
@@ -41,14 +75,15 @@ test('personal invitation loads, persists RSVP and restores it on reload', async
     await expect(page.getByRole('heading', { name: 'An ơi,' })).toBeVisible();
     await page.getByRole('navigation', { name: 'Nội dung thư mời' }).getByRole('button', { name: 'Hồi âm', exact: true }).click();
     await page.getByLabel('Mình sẽ đến', { exact: true }).check();
-    await page.getByLabel('Tổng số người, tính cả bạn').fill('3');
+    await expect(page.getByRole('spinbutton')).toHaveCount(0);
     await page.getByLabel('Gửi Hoàng một lời nhắn').fill('Hẹn gặp Hoàng nhé!');
     await page.getByRole('button', { name: 'Gửi lời hồi âm' }).click();
     await expect(page.getByRole('status').last()).toContainText('Hoàng đã nhận được');
-    expect(submission).toMatchObject({ p_slug: 'an', p_access_token: 'guest-token', p_party_size: 3, p_status: 'attending', p_message: 'Hẹn gặp Hoàng nhé!' });
+    expect(submission).toMatchObject({ p_slug: 'an', p_access_token: 'guest-token', p_party_size: 1, p_status: 'attending', p_message: 'Hẹn gặp Hoàng nhé!' });
     await page.reload();
     await page.getByRole('navigation', { name: 'Nội dung thư mời' }).getByRole('button', { name: 'Hồi âm', exact: true }).click();
-    await expect(page.getByLabel('Tổng số người, tính cả bạn')).toHaveValue('3');
+    await expect(page.getByRole('spinbutton')).toHaveCount(0);
+    await expect(page.getByLabel('Mình sẽ đến', { exact: true })).toBeChecked();
     await expect(page.getByLabel('Gửi Hoàng một lời nhắn')).toHaveValue('Hẹn gặp Hoàng nhé!');
 });
 
