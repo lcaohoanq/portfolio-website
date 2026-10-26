@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { GalleryCaption, getCachedGalleryCaptions, getGalleryCaptions } from '../services/gallery';
 import { rsvpConfigured } from '../services/rsvp';
+import MemoryAudioPlayer from './MemoryAudioPlayer';
 
 const BATCH_SIZE = 12;
 
@@ -43,9 +44,9 @@ export default function MemoryGallery() {
     return <section>
         {/* <p className="eyebrow">Những điều mình muốn mang theo</p> */}
         <h1>Một vài<br /><em>khoảnh khắc.</em></h1>
-        <p>Mình nghĩ tốt nghiệp không chỉ là dịp để nhìn lại những gì bản thân đã đạt được, mà còn là lúc để nhớ về những con người, những nơi chốn và những câu chuyện đã làm nên những năm tháng ấy. Mình vẫn còn nhiều điều muốn học, nhiều nơi muốn đến, nên đây có lẽ chỉ là một cột mốc nhỏ trong hành trình của mình.</p>
+        <p>Mình nghĩ tốt nghiệp là một dịp để nhìn lại những gì bản thân đã đi qua. Điều đáng nhớ không chỉ nằm ở tấm bằng hay một cột mốc vừa hoàn thành. Mình vẫn còn nhiều điều muốn học, nhiều nơi muốn đến và có lẽ sẽ còn nhiều lần bắt đầu lại từ đầu, nhiều lần thử và sai, nhiều lần cố gắng, mông lung và đối mặt với nhiều thử thách hơn của cuộc sống.</p>
         {/* <br/> */}
-        <p>Mình dành riêng một góc ở đây để lưu lại những khoảnh khắc ấy. Có thể chúng chẳng có gì đặc biệt vào lúc này, nhưng mình hy vọng sau này, khi nhìn lại, mình vẫn nhớ rằng đã từng có một khoảng thời gian như thế, với những con người như thế. Và nếu bạn cũng xuất hiện trong những ký ức này, mình vui vì chúng ta đã từng là một phần trong hành trình của nhau.</p>
+        <p>Mình muốn giữ lại những con người mình đã gặp, những nơi mình từng đến, những hoạt động mình từng tham gia và cả những khoảnh khắc mà lúc ấy có lẽ chẳng nghĩ rằng sau này mình sẽ nhớ. Có những bức ảnh không thực sự đẹp, có những ngày bình thường đến mức mình chẳng nghĩ chúng có gì đặc biệt. Nhưng khi nhìn lại, mình nhận ra chính những điều nhỏ bé ấy đã làm nên một phần thanh xuân của mình.</p>
         {!ready ? <p role="status">Đang mở những khoảnh khắc…</p> : <>
         <div className="photo-grid">{__GALLERY_IMAGES__.slice(0, visibleCount).map(({ file, previews }, index) => <figure key={file}>
             <a href={`/invitation/gallery/${file}`} target="_blank" rel="noreferrer">
@@ -58,6 +59,10 @@ export default function MemoryGallery() {
             {captions[file] && <figcaption>{captions[file]}</figcaption>}
         </figure>)}</div>
         {visibleCount < __GALLERY_IMAGES__.length && <div ref={sentinel} className="gallery-sentinel" aria-hidden="true" />}
+        {visibleCount >= __GALLERY_IMAGES__.length && <div className="memory-message">
+            <p className="memory-message-intro">Cảm ơn bạn đã đi cùng mình đến đây. Mình có đôi lời muốn gửi đến bạn.</p>
+            <MemoryAudioPlayer />
+        </div>}
         </>}
     </section>;
 }
