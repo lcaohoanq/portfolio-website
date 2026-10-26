@@ -43,7 +43,9 @@ export default function MemoryGallery() {
     return <section>
         {/* <p className="eyebrow">Những điều mình muốn mang theo</p> */}
         <h1>Một vài<br /><em>khoảnh khắc.</em></h1>
-        <p>Một góc nhỏ để nhìn lại hành trình trước khi bước sang chương mới.</p>
+        <p>Mình nghĩ tốt nghiệp không chỉ là dịp để nhìn lại những gì bản thân đã đạt được, mà còn là lúc để nhớ về những con người, những nơi chốn và những câu chuyện đã làm nên những năm tháng ấy. Mình vẫn còn nhiều điều muốn học, nhiều nơi muốn đến, nên đây có lẽ chỉ là một cột mốc nhỏ trong hành trình của mình.</p>
+        {/* <br/> */}
+        <p>Mình dành riêng một góc ở đây để lưu lại những khoảnh khắc ấy. Có thể chúng chẳng có gì đặc biệt vào lúc này, nhưng mình hy vọng sau này, khi nhìn lại, mình vẫn nhớ rằng đã từng có một khoảng thời gian như thế, với những con người như thế. Và nếu bạn cũng xuất hiện trong những ký ức này, mình vui vì chúng ta đã từng là một phần trong hành trình của nhau.</p>
         {!ready ? <p role="status">Đang mở những khoảnh khắc…</p> : <>
         <div className="photo-grid">{__GALLERY_IMAGES__.slice(0, visibleCount).map(({ file, previews }, index) => <figure key={file}>
             <a href={`/invitation/gallery/${file}`} target="_blank" rel="noreferrer">
