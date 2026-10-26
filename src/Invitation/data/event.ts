@@ -25,15 +25,15 @@ export const archive = {
 } as const
 export const unconfirmed = 'Chưa xác nhận'
 export const event: EventConfig = {
-  title: 'LỄ TỐT NGHIỆP FPTU HCM 2026',
+  title: 'HOANG\'s GRADUATION CEREMONY',
   organizer: 'Đại học FPT HCM',
   date: '2026-11-07',
   startTime: '09:00',
   endTime: '12:00',
   timezone: 'GMT+7',
   utcOffsetMinutes: 7 * 60,
-  venue: 'FPT University HCMC',
-  address: 'Lô E2a-7, Đường D1, Khu Công nghệ cao, Phường Tăng Nhơn Phú, TP. Hồ Chí Minh',
+  venue: 'FPT University',
+  address: 'Lô E2a-7, Đường D1, Khu Công nghệ cao, TP. Thủ Đức, TP. Hồ Chí Minh',
   directionsUrl: 'https://maps.app.goo.gl/UUaQjGfEuRA5vrtf9',
   arrivalNotes: "",
   practicalNotes: null,

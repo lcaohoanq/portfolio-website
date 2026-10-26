@@ -201,6 +201,17 @@ em {
     -ms-overflow-style: none;
 }
 
+.site-page-content.event-page-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.event-page-content .event-section {
+    flex: 0 0 auto;
+    width: 100%;
+    margin: auto;
+}
+
 .site-page-content::-webkit-scrollbar {
     display: none;
 }
@@ -314,21 +325,114 @@ hr {
     cursor: not-allowed;
 }
 
+.event-actions {
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.event-actions a {
+    display: inline-block;
+    padding: 8px 12px;
+    background: #25352a;
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.3;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.event-actions a:hover {
+    background: #16221b;
+}
+
+.event-section {
+    overflow: hidden;
+    background: #171c19;
+    box-shadow: 0 14px 36px rgba(16, 28, 20, .2);
+}
+
+.event-photo {
+    position: relative;
+    aspect-ratio: 1.45;
+    margin: 0;
+    overflow: hidden;
+    border-top: 8px solid #171c19;
+    border-bottom: 8px solid #171c19;
+}
+
+.event-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(7, 15, 10, .95), rgba(7, 15, 10, .56) 30%, transparent 67%);
+    pointer-events: none;
+}
+
 .campus {
     display: block;
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: auto;
-    margin: 6px 0 10px;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 43%;
+    filter: saturate(.84) contrast(1.08);
 }
 
-.event-facts {
-    margin: 28px 0;
+.event-photo-caption {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 28px 34px 30px;
+    color: #f5f1e7;
+    font-family: Terminal, Arial, sans-serif;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, .55);
 }
 
-.event-facts>div {
-    border-top: 1px solid #d9d4ca;
-    padding: 16px 0;
-    gap: 30px;
+.event-photo-caption::before {
+    content: '';
+    display: block;
+    width: 44px;
+    height: 2px;
+    margin-bottom: 15px;
+    background: #deb579;
+}
+
+.event-photo-caption h2 {
+    max-width: 25ch;
+    margin: 0 0 12px;
+    color: #f5f1e7;
+    font-family: Terminal, Arial, sans-serif;
+    font-size: clamp(20px, 2.7vw, 30px);
+    line-height: 1.08;
+    letter-spacing: .025em;
+}
+
+.site-page-content .event-photo-caption p {
+    margin: 0;
+    color: #f5f1e7;
+    font-family: Terminal, Arial, sans-serif;
+    line-height: 1.4;
+}
+
+.site-page-content .event-photo-date {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+    font-size: clamp(15px, 1.7vw, 19px);
+}
+
+.site-page-content .event-photo-place {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.event-photo-place span {
+    font-size: 12px;
 }
 
 dt {
@@ -770,16 +874,39 @@ fieldset small {
         font-size: 9px;
     }
 
-    .event-facts>div {
-        gap: 16px;
+    .event-photo {
+        aspect-ratio: 4 / 5;
     }
 
-    dt {
-        flex-basis: 70px;
+    .event-photo .campus {
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
     }
 
-    dd {
-        font-size: 16px;
+    .event-actions a {
+        padding: 6px 9px;
+        font-size: 12px;
+    }
+
+    .event-photo-caption {
+        padding: 20px;
+    }
+
+    .event-photo-caption h2 {
+        font-size: 19px;
+    }
+
+    .site-page-content .event-photo-date {
+        font-size: 14px;
+    }
+
+    .site-page-content .event-photo-place {
+        font-size: 12px;
+    }
+
+    .event-photo-place span {
+        font-size: 11px;
     }
 
     .photo-grid {

@@ -1,6 +1,6 @@
 import React from 'react';
-import { archive, event, formatEventDate } from './data/event';
-import { invitationCopy, personalNoteCopy } from './data/copy';
+import { archive, event, formatEventDate, formatEventTime } from './data/event';
+import { invitationCopy } from './data/copy';
 import { createGoogleCalendarUrl } from './services/calendar';
 import RSVP from './components/RSVP';
 import MemoryGallery from './components/MemoryGallery';
@@ -25,24 +25,23 @@ export default function Content({ page, invite, accessToken, navigate }: {
         </div><img className="portrait" src="/invitation/photos/fit.png" alt="Hoàng trong trang phục tốt nghiệp" /></div>
         <hr />
         <h2>{invite.greeting}</h2>
-        {/* <p>{personalNoteCopy.paragraphs[0]}.</p> */}
         <p className="letter-message">{invite.message || invitationCopy.paragraph}</p>
-        {/* <p>Mình mong được gặp bạn, cùng trò chuyện và chụp một tấm hình để nhớ về ngày đặc biệt này.</p> */}
         <div className="signature"><img src="/invitation/signature.png" alt="Chữ ký của Hoàng" /><span>{archive.fullName}</span></div>
-        {/* <div className="letter-actions"><button className="site-button" onClick={() => navigate('event')}>Thông tin buổi lễ →</button><button className="site-button" onClick={() => navigate('rsvp')}>Gửi lời hồi âm</button></div> */}
     </article>;
-    if (page === 'event') return <section>
+    if (page === 'event') return <section className="event-section" aria-label="Thông tin buổi lễ">
         {/* <p className="eyebrow">Lưu lại cuộc hẹn của chúng mình</p> */}
-        <h1>Hẹn bạn<br /><em>ngày tốt nghiệp.</em></h1>
-        <img className="campus" src={eventCoverSrc} alt="Ảnh buổi lễ tốt nghiệp" width={1448} height={1086} loading="eager" decoding="async" />
-        <h2>{event.title}</h2>
-        <dl className="event-facts">
-            <div><dt>Ngày</dt><dd>Thứ Bảy, {formatEventDate(event.date)}</dd></div>
-            <div><dt>Thời gian</dt><dd>09:00–12:00 <small>(GMT+7)</small></dd></div>
-            <div><dt>Địa điểm</dt><dd>{event.venue}<p>{event.address}</p></dd></div>
-        </dl>
-        <div className="letter-actions"><a className="site-button" href={event.directionsUrl!} target="_blank" rel="noreferrer">Xem đường đi ↗</a><a className="site-button" href={createGoogleCalendarUrl(event, archive)!} target="_blank" rel="noreferrer">Thêm vào lịch ↗</a></div>
-        {/* <p className="footnote">Bạn có thể rủ thêm người đi cùng. Hẹn gặp bạn ở đó nhé!</p> */}
+        {/* <div className="event-actions">
+            <a href={event.directionsUrl!} target="_blank" rel="noreferrer">Xem đường đi ↗</a>
+            <a href={createGoogleCalendarUrl(event, archive)!} target="_blank" rel="noreferrer">Thêm vào lịch ↗</a>
+        </div> */}
+        <figure className="event-photo">
+            <img className="campus" src={eventCoverSrc} alt="Hoàng trong trang phục tốt nghiệp tại khuôn viên trường" width={1448} height={1086} loading="eager" decoding="async" />
+            <figcaption className="event-photo-caption">
+                <h2>{event.title}</h2>
+                <p className="event-photo-date"><span>Thứ Bảy, {formatEventDate(event.date)}</span><span>{formatEventTime(event.startTime)}–{formatEventTime(event.endTime)}</span></p>
+                <p className="event-photo-place">{event.venue}<br /><span>{event.address}</span></p>
+            </figcaption>
+        </figure>
     </section>;
     if (page === 'photos') return <MemoryGallery />;
     if (page === 'rsvp') return <RSVP slug={invite.slug} accessToken={accessToken} />;
