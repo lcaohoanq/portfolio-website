@@ -28,18 +28,17 @@ export default function Content({ page, invite, accessToken, navigate }: {
         <p className="letter-message">{invite.message || invitationCopy.paragraph}</p>
         <div className="signature"><img src="/invitation/signature.png" alt="Chữ ký của Hoàng" /><span>{archive.fullName}</span></div>
     </article>;
-    if (page === 'event') return <section className="event-section">
+    if (page === 'event') return <section className="event-section" aria-label="Thông tin buổi lễ">
         {/* <p className="eyebrow">Lưu lại cuộc hẹn của chúng mình</p> */}
         {/* <div className="event-actions">
             <a href={event.directionsUrl!} target="_blank" rel="noreferrer">Xem đường đi ↗</a>
             <a href={createGoogleCalendarUrl(event, archive)!} target="_blank" rel="noreferrer">Thêm vào lịch ↗</a>
         </div> */}
-        <h1>Hẹn {invite.name}<br /><em>ngày tốt nghiệp.</em></h1>
         <figure className="event-photo">
             <img className="campus" src={eventCoverSrc} alt="Hoàng trong trang phục tốt nghiệp tại khuôn viên trường" width={1448} height={1086} loading="eager" decoding="async" />
             <figcaption className="event-photo-caption">
                 <h2>{event.title}</h2>
-                <p className="event-photo-date">Thứ Bảy, {formatEventDate(event.date)} · {formatEventTime(event.startTime)}–{formatEventTime(event.endTime)}</p>
+                <p className="event-photo-date"><span>Thứ Bảy, {formatEventDate(event.date)}</span><span>{formatEventTime(event.startTime)}–{formatEventTime(event.endTime)}</span></p>
                 <p className="event-photo-place">{event.venue}<br /><span>{event.address}</span></p>
             </figcaption>
         </figure>

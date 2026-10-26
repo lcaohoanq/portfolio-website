@@ -36,7 +36,7 @@ export default function Desktop({ invite, accessToken }: { invite: Invitation; a
                         {pages.map(({ key, title }) => <button key={key} className={`nav-link ${page === key ? 'selected' : ''}`} aria-current={page === key ? 'page' : undefined} onClick={() => navigate(key)}>{title}</button>)}
                         {/* <span className="nav-note">Một cuộc hẹn,<br />một chương mới.</span> */}
                     </nav>
-                    <main className="site-page-content" key={page} id="letter-content"><Content page={page} invite={invite} accessToken={accessToken} navigate={navigate} /></main>
+                    <main className={`site-page-content${page === 'event' ? ' event-page-content' : ''}`} key={page} id="letter-content"><Content page={page} invite={invite} accessToken={accessToken} navigate={navigate} /></main>
                 </div>
             </Window>
         </div>}
