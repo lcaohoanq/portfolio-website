@@ -46,7 +46,7 @@ export default function MemoryGallery() {
         <h1>Một vài<br /><em>khoảnh khắc.</em></h1>
         <p>Mình nghĩ tốt nghiệp là một dịp để nhìn lại những gì bản thân đã đi qua. Điều đáng nhớ không chỉ nằm ở tấm bằng hay một cột mốc vừa hoàn thành. Mình vẫn còn nhiều điều muốn học, nhiều nơi muốn đến và có lẽ sẽ còn nhiều lần bắt đầu lại từ đầu, nhiều lần thử và sai, nhiều lần cố gắng, mông lung và đối mặt với nhiều thử thách hơn của cuộc sống.</p>
         {/* <br/> */}
-        <p>Mình muốn giữ lại những con người mình đã gặp, những nơi mình từng đến, những hoạt động mình từng tham gia và cả những khoảnh khắc mà lúc ấy có lẽ chẳng nghĩ rằng sau này mình sẽ nhớ. Có những bức ảnh không thực sự đẹp, có những ngày bình thường đến mức mình chẳng nghĩ chúng có gì đặc biệt. Nhưng khi nhìn lại, mình nhận ra chính những điều nhỏ bé ấy đã làm nên một phần thanh xuân của mình.</p>
+        <p>Mình muốn giữ lại những kỉ niệm này, về những người mình đã gặp, những nơi mình từng đến, những hoạt động mình từng tham gia và cả những khoảnh khắc mà lúc ấy có lẽ chẳng nghĩ rằng sau này mình sẽ nhớ. Có những bức ảnh không thực sự đẹp, có những ngày bình thường đến mức mình chẳng nghĩ chúng có gì đặc biệt. Nhưng khi nhìn lại, mình nhận ra chính những điều nhỏ bé ấy đã làm nên một phần thanh xuân của mình.</p>
         {!ready ? <p role="status">Đang mở những khoảnh khắc…</p> : <>
         <div className="photo-grid">{__GALLERY_IMAGES__.slice(0, visibleCount).map(({ file, previews }, index) => <figure key={file}>
             <a href={`/invitation/gallery/${file}`} target="_blank" rel="noreferrer">
