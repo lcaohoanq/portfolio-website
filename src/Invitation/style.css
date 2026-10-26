@@ -209,6 +209,11 @@ em {
     margin-bottom: 18px;
 }
 
+.letter-message {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
 .site-page-content section,
 .site-page-content article {
     max-width: 800px;
