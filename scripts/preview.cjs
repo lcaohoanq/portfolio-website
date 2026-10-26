@@ -23,7 +23,24 @@ http.createServer((req, res) => {
     if (!file.startsWith(root + path.sep)) { res.writeHead(403).end(); return; }
     fs.stat(file, (error, stat) => {
         if (error || !stat.isFile()) { res.writeHead(404).end('Not found'); return; }
-        res.writeHead(200, { 'Content-Type': types[path.extname(file).toLowerCase()] || 'application/octet-stream', 'Referrer-Policy': 'no-referrer', 'Content-Length': stat.size });
+        const media = ['.mp3', '.ogg', '.wav', '.mp4'].includes(path.extname(file).toLowerCase());
+        const headers = { 'Content-Type': types[path.extname(file).toLowerCase()] || 'application/octet-stream', 'Referrer-Policy': 'no-referrer' };
+        if (media) headers['Accept-Ranges'] = 'bytes';
+        const match = media && typeof req.headers.range === 'string' && /^bytes=(\d*)-(\d*)$/.exec(req.headers.range);
+        if (match) {
+            const suffix = !match[1] && match[2];
+            const start = suffix ? Math.max(0, stat.size - Number(match[2])) : Number(match[1]);
+            const end = suffix ? stat.size - 1 : match[2] ? Math.min(stat.size - 1, Number(match[2])) : stat.size - 1;
+            if (start >= stat.size || start > end) {
+                res.writeHead(416, { ...headers, 'Content-Range': `bytes */${stat.size}` }).end();
+                return;
+            }
+            res.writeHead(206, { ...headers, 'Content-Range': `bytes ${start}-${end}/${stat.size}`, 'Content-Length': end - start + 1 });
+            if (req.method === 'HEAD') res.end();
+            else fs.createReadStream(file, { start, end }).pipe(res);
+            return;
+        }
+        res.writeHead(200, { ...headers, 'Content-Length': stat.size });
         if (req.method === 'HEAD') res.end();
         else fs.createReadStream(file).pipe(res);
     });

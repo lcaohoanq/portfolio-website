@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { GalleryCaption, getCachedGalleryCaptions, getGalleryCaptions } from '../services/gallery';
 import { rsvpConfigured } from '../services/rsvp';
+import MemoryAudioPlayer from './MemoryAudioPlayer';
 
 const BATCH_SIZE = 12;
 
@@ -58,6 +59,10 @@ export default function MemoryGallery() {
             {captions[file] && <figcaption>{captions[file]}</figcaption>}
         </figure>)}</div>
         {visibleCount < __GALLERY_IMAGES__.length && <div ref={sentinel} className="gallery-sentinel" aria-hidden="true" />}
+        {visibleCount >= __GALLERY_IMAGES__.length && <div className="memory-message">
+            <p className="memory-message-intro">Cảm ơn bạn đã đi cùng mình đến đây. Mình có đôi lời muốn gửi đến bạn.</p>
+            <MemoryAudioPlayer />
+        </div>}
         </>}
     </section>;
 }
