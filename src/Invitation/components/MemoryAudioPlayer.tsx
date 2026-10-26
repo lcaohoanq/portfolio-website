@@ -112,14 +112,14 @@ export default function MemoryAudioPlayer() {
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 3l3 3-3 3M20 6H7a4 4 0 0 0-4 4v1M7 21l-3-3 3-3m-3 3h13a4 4 0 0 0 4-4v-1" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /><text x="10" y="15" fontSize="9" fontFamily="Arial" fontWeight="bold">1</text></svg>
             </button>
             <div className="memory-player-transport">
-                <button type="button" className="memory-player-icon" aria-label="Lùi 10 giây" onClick={() => seek(currentTime - 10)}>
+                <button type="button" className="memory-player-icon" aria-label="Tua lùi 10 giây" onClick={() => seek(currentTime - 10)}>
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4v16h2V4zm17 0L7 12l14 8z" fill="currentColor" /></svg>
                 </button>
                 <button type="button" className="memory-player-icon memory-player-play" aria-label={playing ? 'Tạm dừng' : 'Phát lời nhắn'} onClick={togglePlayback}>
                     {playing ? <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h5v18H5zm9 0h5v18h-5z" fill="currentColor" /></svg>
                         : <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 2.5a1.5 1.5 0 0 1 2.2-1.3l14 9a1 1 0 0 1 0 1.6l-14 9A1.5 1.5 0 0 1 5 19.5z" fill="currentColor" /></svg>}
                 </button>
-                <button type="button" className="memory-player-icon" aria-label="Tới 10 giây" onClick={() => seek(currentTime + 10)}>
+                <button type="button" className="memory-player-icon" aria-label="Tua nhanh 10 giây" onClick={() => seek(currentTime + 10)}>
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 4v16h2V4zM3 4l14 8-14 8z" fill="currentColor" /></svg>
                 </button>
             </div>
