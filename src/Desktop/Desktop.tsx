@@ -5,11 +5,11 @@ import { IconName } from './assets/icons';
 import Content, { Invitation, Page, pages } from '../Invitation/Content';
 
 const icons: Record<Page, IconName> = {
-    letter: 'showcaseIcon', event: 'myComputer', photos: 'computerBig', rsvp: 'windowExplorerIcon', credits: 'credits',
+    event: 'myComputer', photos: 'computerBig', rsvp: 'windowExplorerIcon', credits: 'credits',
 };
 
 export default function Desktop({ invite, accessToken }: { invite: Invitation; accessToken: string }) {
-    const [page, setPage] = useState<Page>('letter');
+    const [page, setPage] = useState<Page>('event');
     const [open, setOpen] = useState(true);
     const [minimized, setMinimized] = useState(false);
     const [startOpen, setStartOpen] = useState(false);

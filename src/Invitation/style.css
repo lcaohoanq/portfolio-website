@@ -151,7 +151,7 @@ em {
 }
 
 .nav-identity h2 {
-    font-size: 36px;
+    font-size: 40px;
     font-weight: bold;
     letter-spacing: -1.5px;
     margin: 0 0 12px;
@@ -159,7 +159,7 @@ em {
 
 .nav-identity p {
     font-family: Millennium, Georgia, serif;
-    font-size: 23px;
+    font-size: 25px;
 }
 
 .nav-link {
@@ -170,7 +170,7 @@ em {
     color: #000080;
     text-decoration: underline;
     padding: 4px 0;
-    font-size: 17px;
+    font-size: 20px;
 }
 
 .nav-link.selected {
@@ -348,9 +348,12 @@ hr {
 }
 
 .event-section {
-    overflow: hidden;
-    background: #171c19;
-    box-shadow: 0 14px 36px rgba(16, 28, 20, .2);
+    background: transparent;
+}
+
+.event-heading {
+    margin: 0 0 22px;
+    font-size: clamp(36px, 3.5vw, 52px);
 }
 
 .event-photo {
@@ -358,8 +361,10 @@ hr {
     aspect-ratio: 1.45;
     margin: 0;
     overflow: hidden;
+    background: #171c19;
     border-top: 8px solid #171c19;
     border-bottom: 8px solid #171c19;
+    box-shadow: 0 14px 36px rgba(16, 28, 20, .2);
 }
 
 .event-photo::after {
@@ -379,6 +384,33 @@ hr {
     object-fit: cover;
     object-position: center 43%;
     filter: saturate(.84) contrast(1.08);
+}
+
+.event-photo-invite {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    display: block;
+    max-width: 68%;
+    padding: 22px 70px 40px 26px;
+    background: linear-gradient(135deg, rgba(7, 15, 10, .76), rgba(7, 15, 10, .38) 60%, transparent);
+    color: #f5f1e7;
+    text-align: left;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, .65);
+    overflow-wrap: anywhere;
+}
+
+.event-photo-invite span {
+    display: block;
+    font-size: clamp(21px, 2.5vw, 30px);
+    line-height: 1.2;
+}
+
+.event-photo-invite span + span {
+    margin-top: 4px;
+    font-size: clamp(16px, 1.8vw, 21px);
+    font-style: italic;
 }
 
 .event-photo-caption {
@@ -407,7 +439,7 @@ hr {
     margin: 0 0 12px;
     color: #f5f1e7;
     font-family: Terminal, Arial, sans-serif;
-    font-size: clamp(20px, 2.7vw, 30px);
+    font-size: clamp(24px, 3vw, 36px);
     line-height: 1.08;
     letter-spacing: .025em;
 }
@@ -423,16 +455,37 @@ hr {
     display: flex;
     flex-wrap: wrap;
     gap: 4px 18px;
-    font-size: clamp(15px, 1.7vw, 19px);
+    font-size: clamp(17px, 2vw, 22px);
 }
 
 .site-page-content .event-photo-place {
     margin-top: 15px;
-    font-size: 14px;
+    font-size: 17px;
 }
 
 .event-photo-place span {
-    font-size: 12px;
+    font-size: 14px;
+}
+
+.event-signature {
+    position: absolute;
+    z-index: 1;
+    right: 24px;
+    bottom: 22px;
+    width: 170px;
+    height: 76px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.event-signature img {
+    position: absolute;
+    width: 220px;
+    max-width: none;
+    height: auto;
+    top: -30px;
+    left: -28px;
+    filter: invert(1) brightness(2);
 }
 
 dt {
@@ -800,11 +853,11 @@ fieldset small {
     }
 
     .nav-identity h2 {
-        font-size: 28px;
+        font-size: 32px;
     }
 
     .nav-identity p {
-        font-size: 16px;
+        font-size: 19px;
     }
 
     .site-page-content {
@@ -840,7 +893,7 @@ fieldset small {
 
     .nav-link {
         white-space: nowrap;
-        font-size: 15px;
+        font-size: 18px;
     }
 
     .site-page-content {
@@ -875,13 +928,31 @@ fieldset small {
     }
 
     .event-photo {
-        aspect-ratio: 4 / 5;
+        aspect-ratio: 2 / 3;
+    }
+
+    .event-heading {
+        margin-bottom: 14px;
+        font-size: 34px;
     }
 
     .event-photo .campus {
         height: 100%;
         object-fit: cover;
         object-position: center;
+    }
+
+    .event-photo-invite {
+        max-width: 76%;
+        padding: 13px 34px 28px 13px;
+    }
+
+    .event-photo-invite span {
+        font-size: 21px;
+    }
+
+    .event-photo-invite span + span {
+        font-size: 16px;
     }
 
     .event-actions a {
@@ -891,22 +962,30 @@ fieldset small {
 
     .event-photo-caption {
         padding: 20px;
+        width: calc(100% - 78px);
     }
 
     .event-photo-caption h2 {
-        font-size: 19px;
+        font-size: 23px;
     }
 
     .site-page-content .event-photo-date {
-        font-size: 14px;
+        font-size: 17px;
     }
 
     .site-page-content .event-photo-place {
-        font-size: 12px;
+        font-size: 15px;
     }
 
     .event-photo-place span {
-        font-size: 11px;
+        font-size: 13px;
+    }
+
+    .event-signature {
+        right: 8px;
+        bottom: 12px;
+        transform: scale(.6);
+        transform-origin: bottom right;
     }
 
     .photo-grid {
@@ -936,6 +1015,13 @@ fieldset small {
 
     .showcase-header {
         max-width: 210px;
+    }
+}
+
+@media (max-width: 360px) {
+    .event-photo {
+        aspect-ratio: auto;
+        height: 600px;
     }
 }
 
