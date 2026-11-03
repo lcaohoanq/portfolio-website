@@ -5,7 +5,7 @@ import { IconName } from './assets/icons';
 import Content, { Invitation, Page, pages } from '../Invitation/Content';
 
 const icons: Record<Page, IconName> = {
-    event: 'myComputer', photos: 'computerBig', rsvp: 'windowExplorerIcon', credits: 'credits',
+    event: 'myComputer', photos: 'computerBig', rsvp: 'windowExplorerIcon', contact: 'computerSmall', credits: 'credits',
 };
 
 export default function Desktop({ invite, accessToken }: { invite: Invitation; accessToken: string }) {
