@@ -1,9 +1,12 @@
 export type EventConfig = {
   title: string | null
+  phone: string | null
   organizer: string | null
   date: string | null
   startTime: string | null
   endTime: string | null
+  secondStartTime: string | null
+  secondEndTime: string | null
   timezone: string | null
   utcOffsetMinutes: number | null
   venue: string | null
@@ -26,10 +29,13 @@ export const archive = {
 export const unconfirmed = 'Chưa xác nhận'
 export const event: EventConfig = {
   title: 'HOANG\'s GRADUATION CEREMONY',
+  phone: '0934162561',
   organizer: 'Đại học FPT HCM',
   date: '2026-11-07',
-  startTime: '09:00',
-  endTime: '12:00',
+  startTime: '12:30',
+  endTime: '13:30',
+  secondStartTime: '16:30',
+  secondEndTime: '17:00',
   timezone: 'GMT+7',
   utcOffsetMinutes: 7 * 60,
   venue: 'FPT University',

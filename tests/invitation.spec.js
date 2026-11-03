@@ -18,9 +18,9 @@ test('sample invitation retains the desktop and correct event/calendar details',
     await expect(page.getByRole('heading', { name: 'Gửi bạn,' })).toBeVisible();
     await page.getByRole('navigation', { name: 'Nội dung thư mời' }).getByRole('button', { name: 'Buổi lễ', exact: true }).click();
     await expect(page.getByText('Thứ Bảy, 07/11/2026')).toBeVisible();
-    await expect(page.getByText('09:00–12:00')).toBeVisible();
+    await expect(page.getByText('12h30–13h30 | 16h30–17h00')).toBeVisible();
     const calendar = new URL(await page.getByRole('link', { name: 'Thêm vào lịch' }).getAttribute('href'));
-    expect(calendar.searchParams.get('dates')).toBe('20261107T020000Z/20261107T050000Z');
+    expect(calendar.searchParams.get('dates')).toBe('20261107T053000Z/20261107T063000Z');
     await expect(page.getByRole('link', { name: 'Xem đường đi' })).toHaveAttribute('href', 'https://maps.app.goo.gl/UUaQjGfEuRA5vrtf9');
     await page.getByRole('navigation', { name: 'Nội dung thư mời' }).getByRole('button', { name: 'Hồi âm', exact: true }).click();
     await expect(page.getByRole('button', { name: 'Gửi lời hồi âm' })).toBeDisabled();
