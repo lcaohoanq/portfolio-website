@@ -135,6 +135,10 @@ export default class Audio {
             audio.setDetune(options.pitch * 100);
         }
 
+        window.__STORY_AUDIO_CAPTURE__?.play(poolKey, sourceName, buffer, {
+            volume: options.volume || 1, loop: audio.loop, detune: audio.getDetune(), filter: options.filter,
+        });
+
         // Add to pool
         if (audio.source) {
             audio.source.onended = () => {
@@ -162,6 +166,7 @@ export default class Audio {
             const f = Math.max(0, Math.min(22050, frequency));
 
             filter.frequency.setValueAtTime(f, ac.currentTime);
+            window.__STORY_AUDIO_CAPTURE__?.frequency(audio, f);
         }
     }
 
@@ -169,6 +174,7 @@ export default class Audio {
         const a = this.audioPool[audio];
         if (a) {
             a.setVolume(volume);
+            window.__STORY_AUDIO_CAPTURE__?.volume(audio, volume);
         }
     }
 

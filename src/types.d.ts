@@ -57,4 +57,16 @@ type LoadedCubeTexture = THREE.CubeTexture;
 
 type LoadedAudio = AudioBuffer;
 
+// Installed only by the local Story exporter to reproduce the room's audio timeline.
+interface Window {
+    __STORY_AUDIO_CAPTURE__?: {
+        play: (id: string, name: string, buffer: AudioBuffer, options: {
+            volume: number; loop: boolean; detune: number;
+            filter?: { type: BiquadFilterType; frequency: number };
+        }) => void;
+        volume: (id: string, value: number) => void;
+        frequency: (id: string, value: number) => void;
+    };
+}
+
 type ResourceType = 'texture' | 'cubeTexture' | 'gltfModel';
