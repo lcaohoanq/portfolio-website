@@ -113,6 +113,45 @@ RSVP gọi thẳng Supabase, website trên Vercel vẫn là static. Giữ đầy
 - `src/Desktop/`: giao diện Windows và tài nguyên desktop gốc.
 - Lời chào/lời nhắn riêng từng khách: sửa khi tạo khách trong dashboard.
 
+## Xuất Story 9:16
+
+Chạy `npm run export:story` để xuất hai file trong `exports/story/`:
+
+- `hoang-graduation-story.png`: ảnh thư mời 1080 × 1920, căn nội dung cho Story.
+- `hoang-graduation-story.mp4`: video H.264 1080 × 1920, 30 fps, dài 10 giây.
+  Camera đi từ toàn cảnh phòng đến màn hình. Tiêu đề trắng mờ dần khi bắt đầu
+  zoom, video kết thúc ở màn hình máy tính. Giữ âm thanh phòng gốc và các hiệu
+  ứng đang phát theo đúng thời điểm, mã hóa AAC stereo 48 kHz.
+
+Cần `ffmpeg` và Chromium (`npx playwright install chromium`, hoặc dùng
+`CHROMIUM_PATH`). Công cụ luôn xuất thư mời công khai, không chứa mã truy cập
+khách. Dùng nội dung/ảnh hiện tại sau mỗi lần build; bố cục xuất chỉ áp dụng
+trong trình duyệt tạo file. File xuất không được commit hoặc đưa vào bản deploy.
+
+Để xuất theo tên, mở dashboard RSVP → **Xuất Story theo tên khách**, tìm/tích
+chọn khách → **Tải danh sách xuất Story**. Tên lấy từ danh sách hiện tại; file
+JSON chỉ có tên và mã khách. Sau đó chạy trong thư mục project này:
+
+```bash
+npm run export:story -- --guests ~/Downloads/story-guests.json
+```
+
+Công cụ xuất lần lượt `exports/story/<mã-khách>.png` và `<mã-khách>.mp4`, với
+“Hi <tên khách>” trong cả ảnh và màn hình máy tính của video. Mỗi lần chạy build
+một lần và dùng chung trình duyệt cho cả danh sách. Tiến độ hiện theo từng khách;
+nếu một khách lỗi, công cụ tiếp tục với khách còn lại và báo lỗi ở cuối. Chạy lại
+sẽ thay file cùng mã, nên mỗi lần sửa tên có thể chỉ chọn lại người cần xuất.
+
+Xuất nhanh một tên mà không cần dashboard:
+
+```bash
+npm run export:story -- --name "Nguyễn An"
+```
+
+Nếu vừa build xong, có thể dùng `node scripts/export-story.cjs --guests <file>`
+để bỏ qua bước build. Video giữ thời lượng 10 giây, chữ trắng mờ dần khi zoom
+và kết thúc ở màn hình máy tính.
+
 ## Kiểm tra
 
 ```bash

@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import InvitationManager from '../components/InvitationManager'
+import StoryExportPanel from '../components/StoryExportPanel'
 import {
   getRsvpDashboard,
   rsvpConfigured,
@@ -146,6 +147,7 @@ export default function RsvpDashboardPage() {
             </article>
           </div>
 
+          <StoryExportPanel key={accessToken} guests={rows} disabled={loading} />
           <div className="dashboard-table-wrap" aria-busy={loading}>
             <table className="dashboard-table">
               <caption className="visually-hidden">

@@ -5,6 +5,7 @@
         "start": "node scripts/preview.cjs",
         "build": "webpack --config ./bundler/webpack.prod.js",
         "dev": "webpack serve --config ./bundler/webpack.dev.js",
+        "export:story": "npm run build && node scripts/export-story.cjs",
         "typecheck": "tsc --noEmit -p src/tsconfig.json",
         "test": "node scripts/test.cjs"
     },

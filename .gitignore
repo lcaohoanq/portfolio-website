@@ -7,3 +7,5 @@ public/
 .env.*
 !.env.example
 test-results/
+exports/
+/story-guests*.json
